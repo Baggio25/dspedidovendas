@@ -6,18 +6,13 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Produto implements Serializable {
+public class Estado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,25 +20,16 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private Double preco;
-
-	@JsonBackReference
-	@ManyToMany
-	@JoinTable(name = "produto_categoria",
-			joinColumns = 
-				@JoinColumn(name = "produto_id", foreignKey = @ForeignKey(name = "produto_fk")),
-			inverseJoinColumns = 
-				@JoinColumn(name = "categoria_id", foreignKey = @ForeignKey(name = "categoria_fk"))
-	)
-	private List<Categoria> categorias = new ArrayList<Categoria>();
-
-	public Produto() {
+	
+	@OneToMany(mappedBy = "estado")
+	private List<Cidade> cidades = new ArrayList<Cidade>();
+	
+	public Estado() {
 	}
 
-	public Produto(Long id, String nome, Double preco) {
+	public Estado(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
 	}
 
 	public Long getId() {
@@ -62,18 +48,10 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -87,7 +65,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Estado other = (Estado) obj;
 		return Objects.equals(id, other.id);
 	}
 
