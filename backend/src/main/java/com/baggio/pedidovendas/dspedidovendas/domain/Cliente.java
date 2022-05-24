@@ -33,6 +33,9 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
@@ -94,6 +97,10 @@ public class Cliente implements Serializable {
 	
 	public void setTipoCliente(TipoCliente tipoCliente) {
 		this.tipoCliente = tipoCliente.getCodigo();
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 	public Set<String> getTelefones() {
