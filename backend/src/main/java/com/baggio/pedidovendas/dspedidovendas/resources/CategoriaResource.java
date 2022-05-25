@@ -12,29 +12,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.baggio.pedidovendas.dspedidovendas.domain.Categoria;
-import com.baggio.pedidovendas.dspedidovendas.service.CategoriaService;
+import com.baggio.pedidovendas.dspedidovendas.dto.CategoriaDTO;
+import com.baggio.pedidovendas.dspedidovendas.service.categoria.CategoriaServiceImpl;
 
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
 	@Autowired
-	public CategoriaService categoriaService;
+	public CategoriaServiceImpl categoriaService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> find(@PathVariable Long id) {
-		Categoria categoria = categoriaService.find(id);
-		return ResponseEntity.ok(categoria);
+	public ResponseEntity<CategoriaDTO> find(@PathVariable Long id) {
+		CategoriaDTO categoriaDTO = categoriaService.find(id);
+		return ResponseEntity.ok(categoriaDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
-		categoria = categoriaService.save(categoria);
+	public ResponseEntity<CategoriaDTO> save(@RequestBody CategoriaDTO categoriaDTO) {
+		categoriaDTO = categoriaService.create(categoriaDTO);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/{id}").buildAndExpand(categoria.getId()).toUri();
-		return ResponseEntity.created(uri).body(categoria);
+					.path("/{id}").buildAndExpand(categoriaDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(categoriaDTO);
 	}
 	
 }
