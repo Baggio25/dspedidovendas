@@ -13,6 +13,7 @@ import com.baggio.pedidovendas.dspedidovendas.domain.Cidade;
 import com.baggio.pedidovendas.dspedidovendas.domain.Cliente;
 import com.baggio.pedidovendas.dspedidovendas.domain.Endereco;
 import com.baggio.pedidovendas.dspedidovendas.domain.Estado;
+import com.baggio.pedidovendas.dspedidovendas.domain.ItemPedido;
 import com.baggio.pedidovendas.dspedidovendas.domain.Pagamento;
 import com.baggio.pedidovendas.dspedidovendas.domain.PagamentoComBoleto;
 import com.baggio.pedidovendas.dspedidovendas.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.baggio.pedidovendas.dspedidovendas.repository.CidadeRepository;
 import com.baggio.pedidovendas.dspedidovendas.repository.ClienteRepository;
 import com.baggio.pedidovendas.dspedidovendas.repository.EnderecoRepository;
 import com.baggio.pedidovendas.dspedidovendas.repository.EstadoRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.ItemPedidoRepository;
 import com.baggio.pedidovendas.dspedidovendas.repository.PagamentoRepository;
 import com.baggio.pedidovendas.dspedidovendas.repository.PedidoRepository;
 import com.baggio.pedidovendas.dspedidovendas.repository.ProdutoRepository;
@@ -49,12 +51,15 @@ public class DspedidovendasApplication implements CommandLineRunner {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	private PedidoRepository pedidoRepository;
-	
+
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DspedidovendasApplication.class, args);
@@ -126,11 +131,30 @@ public class DspedidovendasApplication implements CommandLineRunner {
 
 		Pagamento pgto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 2);
 		ped1.setPagamento(pgto1);
-		Pagamento pgto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("01/05/2022 22:35"), null);
+		Pagamento pgto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("01/05/2022 22:35"),
+				null);
 		ped2.setPagamento(pgto2);
-		
+
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
+
+		// =========================================
+		// =============== ItemPedido ==============
+
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p1.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+
+		// =========================================
 	}
 
 }
