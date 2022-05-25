@@ -1,8 +1,12 @@
 package com.baggio.pedidovendas.dspedidovendas.dto;
 
+import java.io.Serializable;
+
 import com.baggio.pedidovendas.dspedidovendas.domain.Categoria;
 
-public class CategoriaDTO {
+public class CategoriaDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private String nome;
@@ -16,8 +20,8 @@ public class CategoriaDTO {
 	}
 
 	public CategoriaDTO(Categoria categoria) {
-		this.id = categoria.getId();
-		this.nome = categoria.getNome();
+		id = categoria.getId();
+		nome = categoria.getNome();
 	}
 
 	public Long getId() {

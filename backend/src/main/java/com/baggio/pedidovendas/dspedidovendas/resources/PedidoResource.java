@@ -19,7 +19,7 @@ public class PedidoResource {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Pedido> find(@PathVariable Long id) {
-		Pedido pedido = pedidoService.fint(id);
+		Pedido pedido = pedidoService.find(id);
 		return ResponseEntity.ok(pedido);
 	}
 	
