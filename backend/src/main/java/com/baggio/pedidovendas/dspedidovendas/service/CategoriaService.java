@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baggio.pedidovendas.dspedidovendas.domain.Categoria;
+import com.baggio.pedidovendas.dspedidovendas.dto.CategoriaDTO;
 import com.baggio.pedidovendas.dspedidovendas.repository.CategoriaRepository;
 import com.baggio.pedidovendas.dspedidovendas.service.exception.DataIntegrityException;
 import com.baggio.pedidovendas.dspedidovendas.service.exception.ObjectNotFoundException;
@@ -61,6 +62,10 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria porque possui produtos");
 		}
+	}
+	
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
 	}
 
 }
