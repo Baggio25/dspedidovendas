@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,12 @@ public class CategoriaService {
 		return categoriaRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
+	public Page<Categoria> findPaged(Pageable pageable) {
+		Page<Categoria> page = categoriaRepository.findAll(pageable);
+		return page;
+	}	
+	
 	@Transactional(readOnly = true)
 	public Categoria find(Long id) {
 		Optional<Categoria> categoriaOpt = categoriaRepository.findById(id);
