@@ -22,21 +22,21 @@ public abstract class Pagamento implements Serializable {
 
 	@Id
 	private Long id;
-	
+
 	private Integer estadoPagamento;
-	
+
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
 	private Pedido pedido;
-	
+
 	public Pagamento() {
 	}
 
 	public Pagamento(Long id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		this.id = id;
-		this.estadoPagamento = estadoPagamento.getCodigo();
+		this.estadoPagamento = (estadoPagamento == null) ? null : estadoPagamento.getCodigo();
 		this.pedido = pedido;
 	}
 
@@ -80,5 +80,5 @@ public abstract class Pagamento implements Serializable {
 		Pagamento other = (Pagamento) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

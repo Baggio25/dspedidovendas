@@ -50,9 +50,9 @@ public class CategoriaService {
 
 	@Transactional
 	public Categoria update(Categoria categoria) {
-		find(categoria.getId());
-		categoria = categoriaRepository.save(categoria);
-		return categoria;
+		Categoria newCategoria = find(categoria.getId());
+		updateData(newCategoria, categoria);
+		return categoriaRepository.save(newCategoria);
 	}
 
 	public void delete(Long id) {
@@ -68,4 +68,8 @@ public class CategoriaService {
 		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
 	}
 
+	private void updateData(Categoria newCategoria, Categoria categoria) {
+		newCategoria.setNome(categoria.getNome());
+	}
+	
 }
