@@ -1,16 +1,44 @@
 package com.baggio.pedidovendas.dspedidovendas;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.baggio.pedidovendas.dspedidovendas.domain.Categoria;
+import com.baggio.pedidovendas.dspedidovendas.domain.Cidade;
+import com.baggio.pedidovendas.dspedidovendas.domain.Cliente;
+import com.baggio.pedidovendas.dspedidovendas.domain.Endereco;
+import com.baggio.pedidovendas.dspedidovendas.domain.Estado;
+import com.baggio.pedidovendas.dspedidovendas.domain.ItemPedido;
+import com.baggio.pedidovendas.dspedidovendas.domain.Pagamento;
+import com.baggio.pedidovendas.dspedidovendas.domain.PagamentoComBoleto;
+import com.baggio.pedidovendas.dspedidovendas.domain.PagamentoComCartao;
+import com.baggio.pedidovendas.dspedidovendas.domain.Pedido;
+import com.baggio.pedidovendas.dspedidovendas.domain.Produto;
+import com.baggio.pedidovendas.dspedidovendas.domain.enums.EstadoPagamento;
+import com.baggio.pedidovendas.dspedidovendas.domain.enums.TipoCliente;
+import com.baggio.pedidovendas.dspedidovendas.repository.CategoriaRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.CidadeRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.ClienteRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.EnderecoRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.EstadoRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.ItemPedidoRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.PagamentoRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.PedidoRepository;
+import com.baggio.pedidovendas.dspedidovendas.repository.ProdutoRepository;
+
 @SpringBootApplication
-public class DspedidovendasApplication /*implements CommandLineRunner*/ {
+public class DspedidovendasApplication implements CommandLineRunner {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DspedidovendasApplication.class, args);
 	}
 
-	/*@Autowired
+	@Autowired
 	private CategoriaRepository categoriaRepository;
 
 	@Autowired
@@ -35,9 +63,9 @@ public class DspedidovendasApplication /*implements CommandLineRunner*/ {
 	private PagamentoRepository pagamentoRepository;
 
 	@Autowired
-	private ItemPedidoRepository itemPedidoRepository;*/
+	private ItemPedidoRepository itemPedidoRepository;
 
-	/*@Override
+	@Override
 	public void run(String... args) throws Exception {
 		// ========= Categorias e Produtos ========
 
@@ -127,6 +155,6 @@ public class DspedidovendasApplication /*implements CommandLineRunner*/ {
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 
 		// =========================================
-	}*/
+	}
 
 }
